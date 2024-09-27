@@ -1,0 +1,31 @@
+name: Security Analysis and Tests
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**.sol'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  security-analysis:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Slither
+        run: |
+          sudo apt update &
