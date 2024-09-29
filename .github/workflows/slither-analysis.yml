@@ -1,0 +1,65 @@
+name: Slither Analysis and Contract Testing
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  slither:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14.x'
+
+    - name: Install Hardhat and dependencies
+      run: |
+        yarn install
+
+    - name: Set up Python for Slither
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install Slither
+      run: |
+        pip install slither-analyzer
+
+    - name: Run Slither Analysis
+      run: |
+        slither packages/contracts/contracts/ --json slither-report.json
+
+    - name: Upload Slither Report
+      uses: actions/upload-artifact@v2
+      with:
+        name: slither-report
+        path: slither-report.json
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14.x'
+
+    - name: Install Hardhat and dependencies
+      run: |
+        yarn install
+
+    - name: Run Hardhat Tests
+      run: |
+        yarn hardhat test
