@@ -24,7 +24,7 @@
     "@graphprotocol/contracts": "workspace:^6.2.0",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.9",
     "@nomiclabs/hardhat-ethers": "^2.2.3",
-    "debug": "^4.3.4",
+    "debug": "^4.3.5",
     "ethers": "^5.7.0",
     "hardhat": "~2.14.0",
     "hardhat-secure-accounts": "^0.0.6",
